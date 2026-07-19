@@ -1,7 +1,9 @@
 /* ============================================================
    Bruno Tabet — portfolio interactions
    1. The cities world-map motif (signature moment)
-   2. Scroll reveals + nav state
+      - real continents, glowing journey arcs, a traveling pulse
+      - legend <-> map interactive highlighting
+   2. Ambient cursor glow, scroll reveals, nav state
    ============================================================ */
 (function () {
   "use strict";
@@ -12,126 +14,190 @@
 
   /* --- the journey, in order --- */
   var CITIES = [
-    { key: "tokyo",    name: "Tokyo",     lat: 35.68,  lon: 139.65 },
-    { key: "beirut",   name: "Beirut",    lat: 33.89,  lon: 35.50 },
-    { key: "paris",    name: "Paris",     lat: 48.85,  lon: 2.35 },
-    { key: "dubai",    name: "Dubai",     lat: 25.20,  lon: 55.27 },
-    { key: "berkeley", name: "Berkeley",  lat: 37.87,  lon: -122.27 },
-    { key: "sandiego", name: "San Diego", lat: 32.72,  lon: -117.16 },
-    { key: "newyork",  name: "New York",  lat: 40.71,  lon: -74.00 }
+    { key: "tokyo",    name: "Tokyo",     flag: "🇯🇵", chapter: "Born",    lat: 35.68,  lon: 139.65 },
+    { key: "beirut",   name: "Beirut",    flag: "🇱🇧", chapter: "Roots",   lat: 33.89,  lon: 35.50 },
+    { key: "paris",    name: "Paris",     flag: "🇫🇷", chapter: "Raised",  lat: 48.85,  lon: 2.35 },
+    { key: "dubai",    name: "Dubai",     flag: "🇦🇪", chapter: "Lived",   lat: 25.20,  lon: 55.27 },
+    { key: "berkeley", name: "Berkeley",  flag: "🇺🇸", chapter: "Studied", lat: 37.87,  lon: -122.27 },
+    { key: "sandiego", name: "San Diego", flag: "🇺🇸", chapter: "Worked",  lat: 32.72,  lon: -117.16 },
+    { key: "newyork",  name: "New York",  flag: "🇺🇸", chapter: "Now",     lat: 40.71,  lon: -74.00 }
   ];
 
-  // equirectangular projection -> canvas coords
   function project(lat, lon) {
-    return {
-      x: (lon + 180) / 360 * W,
-      y: (90 - lat) / 180 * H
-    };
+    return { x: (lon + 180) / 360 * W, y: (90 - lat) / 180 * H };
   }
-
   function el(name, attrs) {
     var n = document.createElementNS(SVG_NS, name);
     for (var k in attrs) { if (attrs.hasOwnProperty(k)) n.setAttribute(k, attrs[k]); }
     return n;
   }
 
+  var cityNodes = {}; // key -> { dot, ring, label, base }
+
   function buildMap() {
     var svg = document.getElementById("worldMap");
     if (!svg) return;
-
     var pts = CITIES.map(function (c) { return project(c.lat, c.lon); });
 
-    // --- graticule (subtle world grid) ---
+    // --- real continents ---
+    if (window.WORLD_LAND) {
+      var land = el("path", { class: "map-land", d: window.WORLD_LAND, "fill-rule": "evenodd" });
+      svg.appendChild(land);
+    }
+
+    // --- graticule (subtle world grid over the land) ---
     var grid = el("g", { class: "map-grid" });
     for (var lon = -150; lon <= 150; lon += 30) {
-      var x = (lon + 180) / 360 * W;
-      grid.appendChild(el("line", { x1: x, y1: 0, x2: x, y2: H }));
+      var gx = (lon + 180) / 360 * W;
+      grid.appendChild(el("line", { x1: gx, y1: 0, x2: gx, y2: H }));
     }
-    for (var lat = -60; lat <= 60; lat += 30) {
-      var y = (90 - lat) / 180 * H;
-      grid.appendChild(el("line", { x1: 0, y1: y, x2: W, y2: y }));
+    for (var lat = -30; lat <= 60; lat += 30) {
+      var gy = (90 - lat) / 180 * H;
+      grid.appendChild(el("line", { x1: 0, y1: gy, x2: W, y2: gy }));
     }
     svg.appendChild(grid);
 
-    // --- arcs between consecutive cities (flight-path curves) ---
+    // --- arcs between consecutive cities + one combined journey path ---
     var arcs = [];
+    var journeyD = "M" + pts[0].x + "," + pts[0].y;
     for (var i = 0; i < pts.length - 1; i++) {
       var a = pts[i], b = pts[i + 1];
       var mx = (a.x + b.x) / 2, my = (a.y + b.y) / 2;
       var dist = Math.hypot(b.x - a.x, b.y - a.y);
-      var lift = Math.min(dist * 0.28, 110); // bulge upward like a great-circle
-      var d = "M" + a.x + "," + a.y + " Q" + mx + "," + (my - lift) + " " + b.x + "," + b.y;
-      var arc = el("path", { class: "map-arc", d: d });
+      var lift = Math.min(dist * 0.28, 110);
+      var seg = " Q" + mx + "," + (my - lift) + " " + b.x + "," + b.y;
+      journeyD += seg;
+      var arc = el("path", { class: "map-arc", d: "M" + a.x + "," + a.y + seg });
       svg.appendChild(arc);
       arcs.push(arc);
     }
 
-    // --- city dots + labels ---
+    // --- traveling pulse along the whole journey ---
+    if (!reduceMotion) {
+      var guide = el("path", { d: journeyD, fill: "none", stroke: "none", id: "journeyGuide" });
+      svg.appendChild(guide);
+      [0, 0.5].forEach(function (offset) {
+        var pulse = el("circle", { class: "map-pulse", r: 2.6 });
+        var mo = el("animateMotion", { dur: "11s", repeatCount: "indefinite", rotate: "auto", keyPoints: "0;1", keyTimes: "0;1", calcMode: "linear" });
+        mo.setAttribute("begin", (offset * 11) + "s");
+        var mp = el("mpath");
+        mp.setAttributeNS("http://www.w3.org/1999/xlink", "href", "#journeyGuide");
+        mp.setAttribute("href", "#journeyGuide");
+        mo.appendChild(mp);
+        pulse.appendChild(mo);
+        svg.appendChild(pulse);
+      });
+    }
+
+    // --- city markers + labels ---
     var labels = [];
     CITIES.forEach(function (c, idx) {
       var p = pts[idx];
       var isNow = idx === CITIES.length - 1;
-      svg.appendChild(el("circle", { class: "map-city-glow", cx: p.x, cy: p.y, r: 8 }));
+      var g = el("g", { class: "city" + (isNow ? " city--now" : ""), id: "city-" + c.key });
+      g.appendChild(el("circle", { class: "map-city-glow", cx: p.x, cy: p.y, r: 9 }));
       var ring = el("circle", { class: "map-city-ring", cx: p.x, cy: p.y, r: 4 });
-      svg.appendChild(ring);
-      svg.appendChild(el("circle", { class: "map-city", cx: p.x, cy: p.y, r: isNow ? 3.4 : 2.6 }));
+      g.appendChild(ring);
+      var dot = el("circle", { class: "map-city", cx: p.x, cy: p.y, r: isNow ? 3.4 : 2.6 });
+      g.appendChild(dot);
 
-      // place label to avoid running off the right edge
-      var anchor = p.x > W - 120 ? "end" : "start";
-      var dx = anchor === "end" ? -8 : 8;
-      var label = el("text", {
-        class: "map-label" + (isNow ? " is-now" : ""),
-        x: p.x + dx, y: p.y - 8, "text-anchor": anchor
-      });
+      var anchor = p.x > W - 130 ? "end" : "start";
+      var dx = anchor === "end" ? -9 : 9;
+      var label = el("text", { class: "map-label" + (isNow ? " is-now" : ""), x: p.x + dx, y: p.y - 9, "text-anchor": anchor });
       label.textContent = c.name;
-      svg.appendChild(label);
+      g.appendChild(label);
+
+      svg.appendChild(g);
+      cityNodes[c.key] = { dot: dot, ring: ring, label: label, baseR: isNow ? 3.4 : 2.6 };
       labels.push({ node: label, ring: ring });
     });
 
     animate(arcs, labels);
+    initLegendLink();
   }
 
   function animate(arcs, labels) {
+    var journey = document.getElementById("journey");
     if (reduceMotion) {
-      arcs.forEach(function (a) { a.style.opacity = ".55"; });
+      arcs.forEach(function (a) { a.style.opacity = ".5"; });
       labels.forEach(function (l) { l.node.style.opacity = ".8"; });
-      var jr = document.getElementById("journey");
-      if (jr) { jr.classList.add("is-in"); Array.prototype.forEach.call(jr.children, function (li) { li.style.opacity = 1; }); }
+      if (journey) { journey.classList.add("is-in"); }
       return;
     }
-
-    // draw each arc in sequence, revealing the destination label as it lands
-    var perArc = 520; // ms
+    var perArc = 520;
     arcs.forEach(function (arc, i) {
       var len = arc.getTotalLength();
       arc.style.strokeDasharray = len;
       arc.style.strokeDashoffset = len;
-      arc.style.opacity = ".55";
+      arc.style.opacity = ".5";
       arc.style.transition = "stroke-dashoffset " + perArc + "ms cubic-bezier(0.22,1,0.36,1)";
-      var delay = 500 + i * perArc;
-      setTimeout(function () { arc.style.strokeDashoffset = "0"; }, delay);
+      setTimeout(function () { arc.style.strokeDashoffset = "0"; }, 500 + i * perArc);
     });
-
-    // reveal labels: first at start, rest as each arc arrives
     labels.forEach(function (l, i) {
       var delay = 500 + (i === 0 ? 0 : (i - 1) * perArc + perArc * 0.6);
       setTimeout(function () {
         l.node.style.transition = "opacity .5s ease";
         l.node.style.opacity = ".8";
         l.ring.style.transition = "r 1.2s ease-out, opacity 1.2s ease-out";
-        l.ring.setAttribute("r", "12");
+        l.ring.setAttribute("r", "13");
         l.ring.style.opacity = "0";
       }, delay);
     });
-
-    // stagger the text journey legend below the hero
-    var journey = document.getElementById("journey");
     if (journey) {
       journey.classList.add("is-in");
       Array.prototype.forEach.call(journey.children, function (li, i) {
         li.style.animationDelay = (600 + i * 90) + "ms";
       });
     }
+  }
+
+  /* --- legend <-> map highlight --- */
+  function setActive(key, on) {
+    var n = cityNodes[key];
+    var li = document.querySelector('.journey [data-city="' + key + '"], .journey li[data-city="' + key + '"]');
+    if (!n) return;
+    n.dot.setAttribute("r", on ? n.baseR + 2.4 : n.baseR);
+    n.label.style.opacity = on ? "1" : ".8";
+    n.label.style.fill = on ? "var(--accent-hi)" : "";
+    var g = document.getElementById("city-" + key);
+    if (g) g.classList.toggle("is-active", on);
+    var legendItem = document.querySelector('.journey li[data-city="' + key + '"]');
+    if (legendItem) legendItem.classList.toggle("is-active", on);
+  }
+
+  function initLegendLink() {
+    var items = document.querySelectorAll(".journey li[data-city]");
+    Array.prototype.forEach.call(items, function (li) {
+      var key = li.getAttribute("data-city");
+      li.tabIndex = 0;
+      var on = function () { setActive(key, true); };
+      var off = function () { setActive(key, false); };
+      li.addEventListener("mouseenter", on);
+      li.addEventListener("mouseleave", off);
+      li.addEventListener("focus", on);
+      li.addEventListener("blur", off);
+    });
+  }
+
+  /* --- ambient cursor glow in the hero --- */
+  function initGlow() {
+    var hero = document.getElementById("hero");
+    if (!hero || reduceMotion || !window.matchMedia("(pointer:fine)").matches) return;
+    var glow = document.createElement("div");
+    glow.className = "hero__glow";
+    hero.appendChild(glow);
+    var raf = null;
+    hero.addEventListener("pointermove", function (e) {
+      if (raf) return;
+      raf = requestAnimationFrame(function () {
+        var r = hero.getBoundingClientRect();
+        glow.style.setProperty("--gx", (e.clientX - r.left) + "px");
+        glow.style.setProperty("--gy", (e.clientY - r.top) + "px");
+        glow.style.opacity = "1";
+        raf = null;
+      });
+    });
+    hero.addEventListener("pointerleave", function () { glow.style.opacity = "0"; });
   }
 
   /* --- scroll reveals --- */
@@ -160,6 +226,7 @@
 
   function init() {
     buildMap();
+    initGlow();
     initReveals();
     initNav();
     var y = document.getElementById("year");
