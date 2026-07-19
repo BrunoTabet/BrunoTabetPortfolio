@@ -224,11 +224,55 @@
     window.addEventListener("scroll", onScroll, { passive: true });
   }
 
+  /* --- case study dialog --- */
+  function initCaseStudies() {
+    var dialog = document.getElementById("caseDialog");
+    var body = document.getElementById("caseBody");
+    if (!dialog || !body || typeof dialog.showModal !== "function") return;
+    var opener = null;
+
+    function open(key) {
+      var tpl = document.querySelector('template[data-case-tpl="' + key + '"]');
+      if (!tpl) return;
+      body.innerHTML = "";
+      body.appendChild(tpl.content.cloneNode(true));
+      opener = document.activeElement;
+      dialog.showModal();
+      dialog.scrollTop = 0;
+      document.body.style.overflow = "hidden";
+    }
+    function close() {
+      if (dialog.open) dialog.close();
+    }
+
+    // open triggers: explicit buttons + clicking a project card (but not its links/buttons)
+    document.querySelectorAll("[data-case-open]").forEach(function (b) {
+      b.addEventListener("click", function (e) { e.stopPropagation(); open(b.getAttribute("data-case-open")); });
+    });
+    document.querySelectorAll("[data-case]").forEach(function (card) {
+      card.style.cursor = "pointer";
+      card.addEventListener("click", function (e) {
+        if (e.target.closest("a") || e.target.closest("[data-case-open]")) return;
+        open(card.getAttribute("data-case"));
+      });
+    });
+
+    dialog.querySelector("[data-case-close]").addEventListener("click", close);
+    // click on backdrop (the dialog element itself, outside the body) closes
+    dialog.addEventListener("click", function (e) { if (e.target === dialog) close(); });
+    dialog.addEventListener("close", function () {
+      document.body.style.overflow = "";
+      body.innerHTML = "";
+      if (opener && opener.focus) opener.focus();
+    });
+  }
+
   function init() {
     buildMap();
     initGlow();
     initReveals();
     initNav();
+    initCaseStudies();
     var y = document.getElementById("year");
     if (y) y.textContent = new Date().getFullYear();
   }

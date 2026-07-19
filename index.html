@@ -112,7 +112,7 @@
 
       <div class="cards">
         <!-- Najma -->
-        <article class="card card--feature reveal" id="najma">
+        <article class="card card--feature reveal" id="najma" data-case="najma">
           <div class="card__media" data-motif="najma">
             <div class="card__badge">★ Flagship</div>
           </div>
@@ -136,11 +136,12 @@
             <ul class="tags">
               <li>Solo build</li><li>Agentic AI</li><li>React Native</li><li>Node.js</li><li>Supabase</li><li>Groq LLMs</li><li>Swiss Ephemeris</li>
             </ul>
+            <button class="card__more" type="button" data-case-open="najma">Read the case study <span aria-hidden="true">→</span></button>
           </div>
         </article>
 
         <!-- hiresort -->
-        <article class="card reveal" id="hiresort">
+        <article class="card reveal" id="hiresort" data-case="hiresort">
           <div class="card__media" data-motif="hiresort"></div>
           <div class="card__body">
             <div class="card__head">
@@ -153,15 +154,17 @@
               reasoning, each candidate's strengths and gaps, instead of an opaque match&nbsp;%.
             </p>
             <p class="card__detail">
-              Paste a job description, the AI proposes weighted criteria, you tune them, import CVs
-              from email or upload, and get an explainable shortlist you can actually defend.
+              Under the hood: local embeddings pre-filter candidates so only the best consume
+              expensive LLM calls, and scoring runs as chunked, resumable jobs that survive
+              serverless timeouts. Live at hiresort.app.
             </p>
-            <ul class="tags"><li>AI screening</li><li>Explainable ranking</li><li>Full-stack</li><li>Live</li></ul>
+            <ul class="tags"><li>Next.js 14</li><li>TypeScript</li><li>Prisma / Postgres</li><li>Pluggable LLMs</li><li>Local embeddings</li><li>Stripe</li></ul>
+            <button class="card__more" type="button" data-case-open="hiresort">Read the case study <span aria-hidden="true">→</span></button>
           </div>
         </article>
 
         <!-- Ahlein — WhatsApp receptionist (built, not yet public) -->
-        <article class="card reveal" id="whatsapp">
+        <article class="card reveal" id="whatsapp" data-case="ahlein">
           <div class="card__media" data-motif="whatsapp"></div>
           <div class="card__body">
             <div class="card__head">
@@ -180,6 +183,7 @@
               Google sync. Proven end-to-end on real WhatsApp.
             </p>
             <ul class="tags"><li>Agentic AI</li><li>Python</li><li>FastAPI</li><li>Postgres / pgvector</li><li>Redis</li><li>Gemini</li><li>WhatsApp Cloud API</li></ul>
+            <button class="card__more" type="button" data-case-open="ahlein">Read the case study <span aria-hidden="true">→</span></button>
           </div>
         </article>
 
@@ -269,6 +273,144 @@
     <span>© <span id="year"></span> Bruno Tabet</span>
     <span class="footer__note">Tokyo → Beirut → Paris → Dubai → Berkeley → San Diego → New York</span>
   </footer>
+
+  <!-- CASE STUDY DIALOG -->
+  <dialog id="caseDialog" class="case-dialog" aria-label="Case study">
+    <button class="case-dialog__close" type="button" data-case-close aria-label="Close case study">
+      <span aria-hidden="true">✕</span>
+    </button>
+    <div class="case-dialog__body" id="caseBody"></div>
+  </dialog>
+
+  <!-- CASE STUDY CONTENT (cloned into the dialog on open) -->
+  <template data-case-tpl="najma">
+    <article class="case">
+      <p class="case__eyebrow">Solo build · iOS + web · agentic AI</p>
+      <h2 class="case__title">Najma <span>· MyHoroscopeAI</span></h2>
+      <p class="case__lede">“Astrology that answers the question you actually asked.”</p>
+      <a class="case__cta" href="https://getnajma.com" target="_blank" rel="noopener">Visit getnajma.com <span aria-hidden="true">↗</span></a>
+
+      <h3>The problem</h3>
+      <p>Horoscope apps hand you the same vague daily blurb and never answer the question you
+      actually have — <em>“when should I do this?”</em> And the obvious AI fix backfires: let an
+      LLM talk about astrology and it happily invents numbers and confidence it hasn't earned.</p>
+
+      <h3>The approach</h3>
+      <p>Najma splits <strong>computation from narration</strong>. A deterministic scoring engine,
+      built on real <strong>Swiss Ephemeris</strong> chart math, produces the numbers; the agent —
+      <strong>Nujoom</strong> — can only narrate what the engine computed. Server-side validation
+      means the model literally cannot invent a score. Grounded, not guessed.</p>
+
+      <h3>What it does</h3>
+      <ul>
+        <li><strong>Nujoom, the decision engine</strong> — ask “best day to ask for a raise?” or
+        “when should I plan a date this month?” and it reads your birth chart, scores the timing
+        out of 100, and explains the why.</li>
+        <li>Personalized charts computed from exact birth time and location.</li>
+        <li>Four pillars — Home (daily/weekly/monthly readings), Nujoom, Social (compare charts),
+        and You (birth profile).</li>
+      </ul>
+
+      <h3>My role</h3>
+      <p>Solo across the whole thing — concept, design, full-stack build, the deterministic
+      scoring engine, and the Nujoom agent.</p>
+
+      <div class="case__stack">
+        <span class="case__stack-label">Stack</span>
+        <ul class="tags"><li>React Native</li><li>Node.js</li><li>Supabase</li><li>Groq LLMs</li><li>Swiss Ephemeris</li><li>Deterministic scoring</li></ul>
+      </div>
+      <p class="case__status">iOS in App Store review · web app live now.</p>
+    </article>
+  </template>
+
+  <template data-case-tpl="hiresort">
+    <article class="case">
+      <p class="case__eyebrow">Full-stack · live product</p>
+      <h2 class="case__title">hiresort</h2>
+      <p class="case__lede">“Rank applicants before you read every résumé by hand.”</p>
+      <a class="case__cta" href="https://hiresort.app" target="_blank" rel="noopener">Visit hiresort.app <span aria-hidden="true">↗</span></a>
+
+      <h3>The problem</h3>
+      <p>Hiring teams drown in CVs — especially the many that live outside a formal ATS, in plain
+      email. Percentage-match tools “help” with a black-box number you can't defend to a
+      colleague or a candidate.</p>
+
+      <h3>What it does</h3>
+      <ul>
+        <li>Paste a job description; the AI proposes <strong>weighted criteria</strong> you can tune,
+        with thresholds and hiring notes.</li>
+        <li>Add résumés by upload (PDF/DOCX/XLSX) or <strong>forward them to a per-session inbound
+        email address</strong>.</li>
+        <li>Get ranked candidates with <strong>fit scores, explanations, strengths and gaps</strong>
+        — reasoning you can actually stand behind — and export the results.</li>
+        <li>Collaboration with role-based access (owner / editor / viewer) and shareable links;
+        Stripe-backed tiers; HMAC-signed outbound webhooks on <code>candidate.scored</code>.</li>
+      </ul>
+
+      <h3>Engineering highlights</h3>
+      <ul>
+        <li><strong>Embedding gate for cost</strong> — local sentence embeddings
+        (all-MiniLM-L6-v2) pre-filter candidates so only the most relevant ones ever hit an
+        expensive LLM call.</li>
+        <li><strong>Resumable async scoring</strong> — chunked background jobs with live progress
+        that survive serverless timeouts and closed browser tabs.</li>
+        <li><strong>Distributed-worker coordination without advisory locks</strong> (broken by
+        Supabase's connection pooler) — a DB-column lease model with stale-job reclamation.</li>
+        <li><strong>Provider-aware throughput</strong> — adapts chunk size, concurrency, and
+        rate-limiting to each LLM's quota.</li>
+      </ul>
+
+      <div class="case__stack">
+        <span class="case__stack-label">Stack</span>
+        <ul class="tags"><li>Next.js 14</li><li>TypeScript</li><li>Tailwind</li><li>Prisma / Postgres (Supabase)</li><li>Gemini / OpenAI / Groq</li><li>@xenova/transformers</li><li>Vercel</li><li>Cloudflare R2</li><li>Stripe</li></ul>
+      </div>
+      <p class="case__status">Live at hiresort.app.</p>
+    </article>
+  </template>
+
+  <template data-case-tpl="ahlein">
+    <article class="case">
+      <p class="case__eyebrow">Agentic AI · built &amp; proven end-to-end</p>
+      <h2 class="case__title">Ahlein <span>· WhatsApp receptionist</span></h2>
+      <p class="case__lede">A multi-tenant WhatsApp bot that runs a salon's whole booking desk over chat.</p>
+
+      <h3>The problem</h3>
+      <p>Small service businesses — salons, barbershops, especially in the Gulf and French markets —
+      often have <em>no</em> booking system. The owner is the calendar, and routine phone-tag eats
+      the day. About 80% of that scheduling is mechanical.</p>
+
+      <h3>What it does</h3>
+      <ul>
+        <li>Turns a business's WhatsApp number into an <strong>autonomous booking agent</strong>.
+        A customer texts or sends a voice note — “I want a haircut tomorrow at 4” — and the bot
+        understands, checks live availability, books, and confirms.</li>
+        <li><strong>Voice notes transcribed natively</strong> across Gulf/Levantine/Egyptian
+        Arabic, French, English and code-switching — replies stay in the customer's own dialect.</li>
+        <li><strong>Owns the calendar</strong> — a native availability engine, a read-only .ics
+        feed, and two-way Google Calendar sync (as a best-effort mirror that can never break a
+        booking).</li>
+        <li><strong>Owner-in-the-loop</strong> — live takeover + inbox, notifications, and an
+        autonomy dial (auto-book vs. approve-each) so owners can trust it incrementally.</li>
+      </ul>
+
+      <h3>Engineering highlights</h3>
+      <ul>
+        <li><strong>Real agentic function-calling</strong> — the LLM drives actual tools
+        (<code>check_availability</code>, <code>book</code>, <code>reschedule</code>,
+        <code>cancel</code>, <code>handoff</code>), not just chat.</li>
+        <li><strong>Multi-tenant by design</strong> — one webhook routes every business's traffic
+        by <code>phone_number_id → tenant</code>, with Fernet-encrypted per-tenant secrets.</li>
+        <li><strong>Provider-agnostic adapters</strong> — booking backend and LLM provider both sit
+        behind interfaces chosen by config.</li>
+      </ul>
+
+      <div class="case__stack">
+        <span class="case__stack-label">Stack</span>
+        <ul class="tags"><li>Python</li><li>FastAPI</li><li>async SQLAlchemy</li><li>Postgres / pgvector</li><li>Redis</li><li>Docker</li><li>WhatsApp Cloud API</li><li>Gemini (LLM + audio)</li></ul>
+      </div>
+      <p class="case__status">Core product complete and proven end-to-end on real WhatsApp; launch gated on business verification.</p>
+    </article>
+  </template>
 
   <script src="assets/world-land.js"></script>
   <script src="main.js"></script>
