@@ -12,6 +12,8 @@
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://brunotabet.com" />
   <meta name="theme-color" content="#0E0F13" />
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="assets/favicon.svg" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -28,10 +30,9 @@
     </a>
     <nav class="nav__links" aria-label="Primary">
       <a href="#work">Work</a>
-      <a href="#story">Story</a>
       <a href="#beyond">Beyond code</a>
       <a href="#contact">Contact</a>
-      <a class="nav__cv" href="assets/CV_Bruno_TABET.pdf" download>Résumé</a>
+      <a class="nav__cv" href="assets/CV_Bruno_TABET.pdf" download>CV</a>
     </nav>
   </header>
 
@@ -51,9 +52,10 @@
           I build products <br />end to end, from <br /><em>ML models</em> to <em>shipped apps</em>.
         </h1>
         <p class="hero__lede">
-          I'm a data scientist and builder. What I enjoy most is owning a problem from end to
-          end, from the ML model to the thing people actually use. The map behind this is the
-          short version of how I got from Tokyo to New York.
+          I'm a data scientist at CVS Health in New York, and a builder the rest of the time.
+          I studied at CentraleSupélec in Paris and UC Berkeley, and I like owning a problem end
+          to end, from the ML model to the thing people actually use. The map behind this is the
+          short story of how I got from Tokyo to New York.
         </p>
         <div class="hero__actions">
           <a class="btn btn--primary" href="#work">See the work</a>
@@ -69,38 +71,13 @@
       <!-- Journey legend, revealed with the map -->
       <ol class="journey" id="journey" aria-label="Cities Bruno has lived in, in order">
         <li data-city="tokyo"><span class="journey__flag">🇯🇵</span> Tokyo <span class="journey__tag">born</span></li>
-        <li data-city="beirut"><span class="journey__flag">🇱🇧</span> Beirut <span class="journey__tag">lebanese</span></li>
-        <li data-city="paris"><span class="journey__flag">🇫🇷</span> Paris <span class="journey__tag">french</span></li>
+        <li data-city="beirut"><span class="journey__flag">🇱🇧</span> Beirut <span class="journey__tag">family</span></li>
+        <li data-city="paris"><span class="journey__flag">🇫🇷</span> Paris <span class="journey__tag">raised</span></li>
         <li data-city="dubai"><span class="journey__flag">🇦🇪</span> Dubai <span class="journey__tag">lived</span></li>
         <li data-city="berkeley"><span class="journey__flag">🇺🇸</span> Berkeley <span class="journey__tag">studied</span></li>
         <li data-city="sandiego"><span class="journey__flag">🇺🇸</span> San Diego <span class="journey__tag">worked</span></li>
         <li data-city="newyork"><span class="journey__flag">🇺🇸</span> New York <span class="journey__tag">now</span></li>
       </ol>
-    </section>
-
-    <!-- STORY -->
-    <section class="section story reveal" id="story">
-      <p class="section__kicker">The story</p>
-      <div class="story__grid">
-        <h2 class="story__lead">
-          Most of what I know I picked up <em>building things</em> (and breaking a
-          few along the way).
-        </h2>
-        <div class="story__body">
-          <p>
-            By day I'm a data scientist at CVS Health in New York, working on healthcare data at
-            scale. Before that I built ML forecasting models at Encore Capital in San Diego.
-          </p>
-          <p>
-            I studied at CentraleSupélec in Paris and UC Berkeley, mostly machine learning,
-            statistics and optimization. Everything else I learned the fun way, shipping my own
-            products at night and on weekends.
-          </p>
-          <p class="story__langs">
-            <span>French</span><span>English</span><span>Arabic</span><span>Spanish (conversational)</span>
-          </p>
-        </div>
-      </div>
     </section>
 
     <!-- SELECTED WORK -->
@@ -331,7 +308,7 @@
       <h2 class="contact__title">Let's build something, or just say hello.</h2>
       <div class="contact__actions">
         <a class="btn btn--primary btn--lg" href="mailto:tabetbruno@gmail.com">tabetbruno@gmail.com</a>
-        <a class="btn btn--ghost btn--lg" href="assets/CV_Bruno_TABET.pdf" download>Download résumé</a>
+        <a class="btn btn--ghost btn--lg" href="assets/CV_Bruno_TABET.pdf" download>Download CV</a>
       </div>
       <ul class="contact__links">
         <li><a href="https://github.com/BrunoTabet" target="_blank" rel="noopener">GitHub</a></li>
@@ -342,7 +319,6 @@
 
   <footer class="footer">
     <span>© <span id="year"></span> Bruno Tabet</span>
-    <span class="footer__note">Designed and built from scratch. No templates.</span>
   </footer>
 
   <!-- CASE STUDY DIALOG -->
@@ -357,7 +333,7 @@
   <template data-case-tpl="najma">
     <article class="case">
       <p class="case__eyebrow">Solo build · iOS + web · agentic AI</p>
-      <h2 class="case__title">Najma <span>· MyHoroscopeAI</span></h2>
+      <h2 class="case__title">Najma <span>“star”, in Arabic</span></h2>
       <p class="case__lede">“Astrology that answers the question you actually asked.”</p>
       <a class="case__cta" href="https://getnajma.com" target="_blank" rel="noopener">Visit getnajma.com <span aria-hidden="true">↗</span></a>
 

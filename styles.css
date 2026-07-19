@@ -363,16 +363,18 @@ em { font-style: italic; color: var(--accent-hi); font-weight: 500; }
 
 /* --- Najma · live animated Nujoom demo (navy / cyan) --- */
 .nj {
-  background: radial-gradient(120% 80% at 80% 0%, #142a5c 0%, #0a1024 60%);
+  width: 100%; flex: 1;
+  background: radial-gradient(130% 95% at 82% 0%, #14213b 0%, #080b13 62%);
   padding: clamp(14px, 2vw, 18px); display: flex; flex-direction: column; color: #d7e2fb; height: 100%;
 }
 .nj__head { display: flex; align-items: baseline; gap: 8px; margin-bottom: 12px; }
 .nj__title { color: #7cc4ff; font-weight: 600; font-size: .92rem; }
 .nj__sub { color: #5f77b0; font-size: .7rem; }
 .nj__stream { flex: 1; min-height: 232px; display: flex; flex-direction: column; gap: 10px; }
-.nj__dots { display: flex; gap: 5px; justify-content: center; margin-top: 10px; }
-.nj__dots i { width: 6px; height: 6px; border-radius: 50%; background: #384c78; transition: .3s; }
-.nj__dots i.on { background: #6cc3ef; width: 16px; border-radius: 3px; }
+.nj__dots { display: flex; gap: 7px; justify-content: center; margin-top: 10px; }
+.nj__dots i { width: 7px; height: 7px; border-radius: 50%; background: #384c78; transition: .3s; cursor: pointer; }
+.nj__dots i:hover { background: #6cc3ef; }
+.nj__dots i.on { background: #6cc3ef; width: 18px; border-radius: 3px; }
 .nj .q { align-self: flex-end; max-width: 90%; background: linear-gradient(180deg, #9fdcf6, #6cc3ef); color: #06131f; font-weight: 500; padding: 8px 12px; border-radius: 14px 14px 4px 14px; font-size: .8rem; line-height: 1.4; }
 .nj .q .cursor { display: inline-block; width: 2px; height: 1em; background: #06131f; margin-left: 1px; vertical-align: -2px; animation: nblink 1s steps(1) infinite; }
 @keyframes nblink { 50% { opacity: 0; } }

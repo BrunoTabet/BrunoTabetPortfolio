@@ -76,9 +76,11 @@
     if (!reduceMotion) {
       var guide = el("path", { d: journeyD, fill: "none", stroke: "none", id: "journeyGuide" });
       svg.appendChild(guide);
+      var pulses = [];
       [0, 0.5].forEach(function (offset) {
         var pulse = el("circle", { class: "map-pulse", r: 2.6 });
-        var mo = el("animateMotion", { dur: "11s", repeatCount: "indefinite", rotate: "auto", keyPoints: "0;1", keyTimes: "0;1", calcMode: "linear" });
+        // finite: a couple of passes down the journey, then it settles
+        var mo = el("animateMotion", { dur: "11s", repeatCount: "2", rotate: "auto", keyPoints: "0;1", keyTimes: "0;1", calcMode: "linear" });
         mo.setAttribute("begin", (offset * 11) + "s");
         var mp = el("mpath");
         mp.setAttributeNS("http://www.w3.org/1999/xlink", "href", "#journeyGuide");
@@ -86,7 +88,10 @@
         mo.appendChild(mp);
         pulse.appendChild(mo);
         svg.appendChild(pulse);
+        pulses.push(pulse);
       });
+      // remove the pulses once they've made their passes, so the map comes to rest
+      setTimeout(function () { pulses.forEach(function (p) { p.remove(); }); }, 24000);
     }
 
     // --- city markers + labels ---
@@ -311,21 +316,31 @@
       requestAnimationFrame(function () { a.classList.add("show"); });
     }
 
-    var idx = 0, started = false;
+    var idx = 0, started = false, gen = 0;
     function run() {
+      var myGen = ++gen; // any newer run (e.g. a dot click) cancels this one
       stream.style.opacity = 0;
       wait(reduce ? 60 : 260).then(function () {
+        if (myGen !== gen) return;
         stream.innerHTML = ""; stream.style.opacity = 1;
         dots.forEach(function (d, i) { d.classList.toggle("on", i === idx); });
         var c = convos[idx];
-        return typeQ(c.q).then(showTyping).then(function () { answer(c); });
+        return typeQ(c.q)
+          .then(function () { if (myGen !== gen) throw 0; return showTyping(); })
+          .then(function () { if (myGen !== gen) throw 0; answer(c); });
       }).then(function () {
+        if (myGen !== gen) return;
         // play each question once, then freeze on the last frame
         if (idx < convos.length - 1) {
-          return wait(reduce ? 2200 : 5200).then(function () { idx++; run(); });
+          return wait(reduce ? 2200 : 5200).then(function () { if (myGen === gen) { idx++; run(); } });
         }
-      });
+      }).catch(function () {});
     }
+
+    // let the reader jump between the two examples
+    dots.forEach(function (d, i) {
+      d.addEventListener("click", function (e) { e.stopPropagation(); idx = i; run(); });
+    });
 
     // start only when the card scrolls into view (saves work off-screen)
     if ("IntersectionObserver" in window) {
