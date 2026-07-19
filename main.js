@@ -320,10 +320,10 @@
         var c = convos[idx];
         return typeQ(c.q).then(showTyping).then(function () { answer(c); });
       }).then(function () {
-        return wait(reduce ? 2600 : 5600);
-      }).then(function () {
-        idx = (idx + 1) % convos.length;
-        run();
+        // play each question once, then freeze on the last frame
+        if (idx < convos.length - 1) {
+          return wait(reduce ? 2200 : 5200).then(function () { idx++; run(); });
+        }
       });
     }
 
@@ -401,9 +401,8 @@
           seq = seq.then(function () { return wait(i === 0 ? 200 : 320); }).then(function () { addRow(c, i + 1); });
         });
         return seq;
-      }).then(function () {
-        return wait(reduce ? 2800 : 4200);
-      }).then(run);
+      });
+      // scored once, then freeze on the ranked list (no loop)
     }
 
     if ("IntersectionObserver" in window) {
@@ -476,9 +475,11 @@
           addBubble(m);
         });
       });
-      seq.then(function () { return wait(reduce ? 2600 : 3600); }).then(function () {
-        idx = (idx + 1) % scenarios.length;
-        run();
+      seq.then(function () {
+        // play each business once, then freeze on the last conversation
+        if (idx < scenarios.length - 1) {
+          return wait(reduce ? 2200 : 3400).then(function () { idx++; run(); });
+        }
       });
     }
 
@@ -490,6 +491,48 @@
       }, { threshold: 0.3 });
       io.observe(chat);
     } else { run(); }
+  }
+
+  /* --- Berkeley capstone · citation forecast demo (runs once) --- */
+  function initCapstoneDemo() {
+    var chart = document.getElementById("capChart");
+    if (!chart) return;
+    var reduce = window.matchMedia("(prefers-reduced-motion:reduce)").matches;
+    var data = [14, 22, 30, 46, 58, 74, 96, 128, 150];
+    var labels = ["’17", "’18", "’19", "’20", "’21", "’22", "’23", "’24", "’25"];
+    var foreFrom = 7, max = 165;
+    var started = false;
+
+    function build() {
+      chart.innerHTML = "";
+      var thr = document.createElement("div");
+      thr.className = "mcap__thresh";
+      thr.style.bottom = (100 / max * 100) + "%";
+      thr.innerHTML = "<span>breakthrough · 100</span>";
+      chart.appendChild(thr);
+      var flag = document.createElement("div");
+      flag.className = "mcap__flag";
+      flag.textContent = "breakthrough predicted ✓";
+      chart.appendChild(flag);
+
+      data.forEach(function (v, i) {
+        var col = document.createElement("div"); col.className = "mcap__col";
+        var fore = i >= foreFrom;
+        col.innerHTML = '<span class="mcap__bar' + (fore ? " is-fore" : "") + '"></span><small>' + labels[i] + "</small>";
+        chart.appendChild(col);
+        var bar = col.querySelector(".mcap__bar");
+        setTimeout(function () { bar.style.height = (v / max * 100) + "%"; }, reduce ? 0 : 90 * i + 200);
+      });
+      setTimeout(function () { thr.classList.add("show"); }, reduce ? 0 : 90 * data.length + 400);
+      setTimeout(function () { flag.classList.add("show"); }, reduce ? 0 : 90 * data.length + 900);
+    }
+
+    if ("IntersectionObserver" in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) { if (e.isIntersecting && !started) { started = true; build(); io.disconnect(); } });
+      }, { threshold: 0.3 });
+      io.observe(chart);
+    } else { build(); }
   }
 
   /* --- case study dialog --- */
@@ -543,6 +586,7 @@
     initNajmaDemo();
     initHiresortDemo();
     initAhleinDemo();
+    initCapstoneDemo();
     initCaseStudies();
     var y = document.getElementById("year");
     if (y) y.textContent = new Date().getFullYear();

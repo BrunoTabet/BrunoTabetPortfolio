@@ -24,7 +24,7 @@
   <!-- NAV -->
   <header class="nav" id="nav">
     <a class="nav__mark" href="#top" aria-label="Bruno Tabet, home">
-      <span class="nav__initials">BT</span>
+      <span class="nav__wordmark">Bruno Tabet</span>
     </a>
     <nav class="nav__links" aria-label="Primary">
       <a href="#work">Work</a>
@@ -61,7 +61,7 @@
         </div>
         <ul class="hero__social" aria-label="Elsewhere">
           <li><a href="https://github.com/BrunoTabet" target="_blank" rel="noopener">GitHub</a></li>
-          <li><a href="https://www.linkedin.com/in/bruno-tabet/" target="_blank" rel="noopener">LinkedIn</a></li>
+          <li><a href="https://www.linkedin.com/in/bruno-tabet2001/" target="_blank" rel="noopener">LinkedIn</a></li>
           <li><a href="mailto:tabetbruno@gmail.com">Email</a></li>
         </ul>
       </div>
@@ -69,8 +69,8 @@
       <!-- Journey legend, revealed with the map -->
       <ol class="journey" id="journey" aria-label="Cities Bruno has lived in, in order">
         <li data-city="tokyo"><span class="journey__flag">🇯🇵</span> Tokyo <span class="journey__tag">born</span></li>
-        <li data-city="beirut"><span class="journey__flag">🇱🇧</span> Beirut <span class="journey__tag">roots</span></li>
-        <li data-city="paris"><span class="journey__flag">🇫🇷</span> Paris <span class="journey__tag">raised</span></li>
+        <li data-city="beirut"><span class="journey__flag">🇱🇧</span> Beirut <span class="journey__tag">lebanese</span></li>
+        <li data-city="paris"><span class="journey__flag">🇫🇷</span> Paris <span class="journey__tag">french</span></li>
         <li data-city="dubai"><span class="journey__flag">🇦🇪</span> Dubai <span class="journey__tag">lived</span></li>
         <li data-city="berkeley"><span class="journey__flag">🇺🇸</span> Berkeley <span class="journey__tag">studied</span></li>
         <li data-city="sandiego"><span class="journey__flag">🇺🇸</span> San Diego <span class="journey__tag">worked</span></li>
@@ -112,7 +112,6 @@
         <!-- Najma -->
         <article class="card card--feature reveal" id="najma" data-case="najma">
           <div class="card__media card__media--mock" data-motif="najma">
-            <div class="card__badge">★ Flagship</div>
             <div class="nj" aria-hidden="true">
               <div class="nj__head">
                 <span class="nj__title">✦ Nujoom</span>
@@ -124,14 +123,14 @@
           </div>
           <div class="card__body">
             <div class="card__head">
-              <h3>Najma <span class="card__sub">(MyHoroscopeAI)</span></h3>
-              <a class="card__link" href="https://getnajma.com" target="_blank" rel="noopener">getnajma.com ↗</a>
+              <h3><span class="card__logo" aria-hidden="true"></span>Najma <span class="card__sub">“star”, in Arabic</span></h3>
             </div>
             <p class="card__what">
               <em>“Astrology that answers the question you actually asked.”</em> Its core,
-              <strong>Nujoom</strong>, is an <strong>agentic AI decision engine</strong>: ask it
-              <em>“best day to ask for a raise?”</em> and it reads your birth chart, scores the
-              timing out of 100, and explains why.
+              <strong>Nujoom</strong> (Arabic for <em>stars</em>), is an
+              <strong>agentic AI decision engine</strong>: ask it <em>“best day to ask for a
+              raise?”</em> and it reads your birth chart, scores the timing out of 100, and
+              explains why.
             </p>
             <p class="card__detail">
               <strong>Grounded, not guessed.</strong> A deterministic scoring engine computes the
@@ -140,14 +139,17 @@
               review, and the web app is live now.
             </p>
             <ul class="tags">
-              <li>Solo build</li><li>Agentic AI</li><li>React Native</li><li>Node.js</li><li>Supabase</li><li>Groq LLMs</li><li>Swiss Ephemeris</li>
+              <li>Solo build</li><li>Agentic AI</li><li>React Native</li><li>Swiss Ephemeris</li><li>Groq LLMs</li>
             </ul>
-            <button class="card__more" type="button" data-case-open="najma">Read the case study <span aria-hidden="true">→</span></button>
+            <div class="card__actions">
+              <a class="card__cta card__cta--primary" href="https://getnajma.com" target="_blank" rel="noopener">Try it live at getnajma.com <span aria-hidden="true">↗</span></a>
+              <button class="card__more" type="button" data-case-open="najma">Learn more about Najma <span aria-hidden="true">→</span></button>
+            </div>
           </div>
         </article>
 
         <!-- hiresort -->
-        <article class="card reveal" id="hiresort" data-case="hiresort">
+        <article class="card card--feature reveal" id="hiresort" data-case="hiresort">
           <div class="card__media card__media--mock" data-motif="hiresort">
             <div class="mock mock--hiresort" aria-hidden="true">
               <div class="mhs__head">
@@ -161,7 +163,6 @@
           <div class="card__body">
             <div class="card__head">
               <h3>hiresort</h3>
-              <a class="card__link" href="https://hiresort.app" target="_blank" rel="noopener">hiresort.app ↗</a>
             </div>
             <p class="card__what">
               <em>“Rank applicants before you read every résumé by hand.”</em> An AI screening tool
@@ -171,15 +172,18 @@
             <p class="card__detail">
               Under the hood: local embeddings pre-filter candidates so only the best consume
               expensive LLM calls, and scoring runs as chunked, resumable jobs that survive
-              serverless timeouts. Live at hiresort.app.
+              serverless timeouts.
             </p>
-            <ul class="tags"><li>Next.js 14</li><li>TypeScript</li><li>Prisma / Postgres</li><li>Pluggable LLMs</li><li>Local embeddings</li><li>Stripe</li></ul>
-            <button class="card__more" type="button" data-case-open="hiresort">Read the case study <span aria-hidden="true">→</span></button>
+            <ul class="tags"><li>Solo build</li><li>Next.js 14</li><li>TypeScript</li><li>Local embeddings</li><li>Pluggable LLMs</li><li>Stripe</li></ul>
+            <div class="card__actions">
+              <a class="card__cta card__cta--primary" href="https://hiresort.app" target="_blank" rel="noopener">Try it live at hiresort.app <span aria-hidden="true">↗</span></a>
+              <button class="card__more" type="button" data-case-open="hiresort">Learn more about hiresort <span aria-hidden="true">→</span></button>
+            </div>
           </div>
         </article>
 
         <!-- Ahlein, WhatsApp receptionist (built, not yet public) -->
-        <article class="card reveal" id="whatsapp" data-case="ahlein">
+        <article class="card card--feature reveal" id="whatsapp" data-case="ahlein">
           <div class="card__media card__media--mock" data-motif="whatsapp">
             <div class="mock mock--wa" aria-hidden="true">
               <div class="mwa__head">
@@ -191,7 +195,7 @@
           </div>
           <div class="card__body">
             <div class="card__head">
-              <h3>Ahlein <span class="card__sub">(WhatsApp receptionist)</span></h3>
+              <h3>Ahlein <span class="card__sub">a warm Lebanese hello</span></h3>
               <span class="card__link is-static">Built · launch pending</span>
             </div>
             <p class="card__what">
@@ -206,24 +210,48 @@
               natively across Arabic dialects, French and English, and owns a live calendar with
               two-way Google sync. Proven end to end on real WhatsApp.
             </p>
-            <ul class="tags"><li>Agentic AI</li><li>Python</li><li>FastAPI</li><li>Postgres / pgvector</li><li>Redis</li><li>Gemini</li><li>WhatsApp Cloud API</li></ul>
-            <button class="card__more" type="button" data-case-open="ahlein">Read the case study <span aria-hidden="true">→</span></button>
+            <ul class="tags"><li>Solo build</li><li>Agentic AI</li><li>Python</li><li>FastAPI</li><li>Gemini</li><li>WhatsApp Cloud API</li></ul>
+            <div class="card__actions">
+              <button class="card__more" type="button" data-case-open="ahlein">Learn more about Ahlein <span aria-hidden="true">→</span></button>
+            </div>
           </div>
         </article>
 
         <!-- Berkeley capstone -->
-        <article class="card reveal" id="capstone">
-          <div class="card__media" data-motif="capstone"></div>
+        <article class="card card--feature reveal" id="capstone" data-case="capstone">
+          <div class="card__media card__media--mock" data-motif="capstone">
+            <div class="mock mock--capstone" aria-hidden="true">
+              <div class="mcap__head">
+                <span class="mcap__title">✦ Citation forecast</span>
+                <span class="mcap__sub">one inventor · per year</span>
+              </div>
+              <div class="mcap__chart" id="capChart"></div>
+              <div class="mcap__foot">
+                <span><b>89%</b> breakthrough accuracy</span>
+                <span><b>±48</b> citations MAE</span>
+              </div>
+            </div>
+          </div>
           <div class="card__body">
             <div class="card__head">
               <h3>Predicting the next impactful scientists</h3>
-              <span class="card__link is-static">Berkeley MEng capstone</span>
+              <span class="card__link is-static">Berkeley MEng · 2024</span>
             </div>
             <p class="card__what">
-              Classification + forecasting models that predict inventor breakthroughs from
-              patents, publications and citations. It's the serious ML side of what I do.
+              Machine-learning models that spot which scientists will make future
+              <strong>breakthroughs</strong> (papers cited 100+ times within three years), from
+              their patents, publications and citation history. Useful for BioTech hiring and
+              research investing.
             </p>
-            <ul class="tags"><li>91% accuracy (boosting)</li><li>48-paper MAE</li><li>Python</li><li>ML forecasting</li></ul>
+            <p class="card__detail">
+              Two tracks: a classifier for whether a scientist breaks through (around 89% accuracy),
+              and a time-series forecast of their future yearly citations (±48 MAE). A team project
+              at Berkeley, advised by Prof. Lee Fleming.
+            </p>
+            <ul class="tags"><li>Team of 3</li><li>89% accuracy</li><li>±48 citations MAE</li><li>Python</li><li>Boosting</li><li>Time-series</li></ul>
+            <div class="card__actions">
+              <button class="card__more" type="button" data-case-open="capstone">Learn more about the capstone <span aria-hidden="true">→</span></button>
+            </div>
           </div>
         </article>
       </div>
@@ -307,7 +335,7 @@
       </div>
       <ul class="contact__links">
         <li><a href="https://github.com/BrunoTabet" target="_blank" rel="noopener">GitHub</a></li>
-        <li><a href="https://www.linkedin.com/in/bruno-tabet/" target="_blank" rel="noopener">LinkedIn</a></li>
+        <li><a href="https://www.linkedin.com/in/bruno-tabet2001/" target="_blank" rel="noopener">LinkedIn</a></li>
       </ul>
     </section>
   </main>
@@ -432,6 +460,41 @@
         <ul class="tags"><li>Python</li><li>FastAPI</li><li>async SQLAlchemy</li><li>Postgres / pgvector</li><li>Redis</li><li>Docker</li><li>WhatsApp Cloud API</li><li>Gemini (LLM + audio)</li></ul>
       </div>
       <p class="case__status">Core product complete and proven end-to-end on real WhatsApp; launch gated on business verification.</p>
+    </article>
+  </template>
+
+  <template data-case-tpl="capstone">
+    <article class="case">
+      <p class="case__eyebrow">UC Berkeley · MEng capstone · team of 3</p>
+      <h2 class="case__title">Predicting the next impactful scientists</h2>
+      <p class="case__lede">Who will make the next breakthrough, predicted from patents and publications.</p>
+
+      <h3>Why it's interesting</h3>
+      <p>Individual scientific success is famously hard to call, almost like drawing the lottery.
+      The question we chased was how far patent and publication signals can actually forecast a
+      researcher's future impact, which matters a lot for BioTech hiring and research investing.</p>
+
+      <h3>What we built</h3>
+      <ul>
+        <li><strong>Breakthrough classifier.</strong> Predicts whether a scientist will publish a
+        breakthrough (a paper cited 100+ times within three years). We compared CART, Random Forest,
+        gradient boosting and a neural net, and reached around <strong>89% accuracy</strong>.</li>
+        <li><strong>Citation forecaster.</strong> A time-series model for each researcher's future
+        yearly citations, benchmarked against naive and moving-average baselines, down to about
+        <strong>±48 MAE</strong>.</li>
+        <li>Trained on thousands of scientists from patent and publication databases, with careful
+        feature selection (co-authors, prior-year citations and works, and more).</li>
+      </ul>
+
+      <h3>My role</h3>
+      <p>A three-person team advised by Prof. Lee Fleming. I worked across the data processing, the
+      classification models and the forecasting pipeline.</p>
+
+      <div class="case__stack">
+        <span class="case__stack-label">Stack</span>
+        <ul class="tags"><li>Python</li><li>scikit-learn</li><li>Gradient boosting</li><li>Random Forest</li><li>Time-series</li><li>TensorFlow / Keras</li></ul>
+      </div>
+      <p class="case__status">UC Berkeley MEng, Industrial Engineering &amp; Operations Research, 2024.</p>
     </article>
   </template>
 
