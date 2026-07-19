@@ -15,9 +15,9 @@
   /* --- the journey, in order --- */
   var CITIES = [
     { key: "tokyo",    name: "Tokyo",     flag: "🇯🇵", chapter: "Born",    lat: 35.68,  lon: 139.65 },
-    { key: "beirut",   name: "Beirut",    flag: "🇱🇧", chapter: "Roots",   lat: 33.89,  lon: 35.50 },
+    { key: "beirut",   name: "Lebanon",   flag: "🇱🇧", chapter: "Family",  lat: 33.89,  lon: 35.50 },
     { key: "paris",    name: "Paris",     flag: "🇫🇷", chapter: "Raised",  lat: 48.85,  lon: 2.35 },
-    { key: "dubai",    name: "Dubai",     flag: "🇦🇪", chapter: "Lived",   lat: 25.20,  lon: 55.27 },
+    { key: "dubai",    name: "Dubai",     flag: "🇦🇪", chapter: "Worked",  lat: 25.20,  lon: 55.27 },
     { key: "berkeley", name: "Berkeley",  flag: "🇺🇸", chapter: "Studied", lat: 37.87,  lon: -122.27 },
     { key: "sandiego", name: "San Diego", flag: "🇺🇸", chapter: "Worked",  lat: 32.72,  lon: -117.16 },
     { key: "newyork",  name: "New York",  flag: "🇺🇸", chapter: "Now",     lat: 40.71,  lon: -74.00 }

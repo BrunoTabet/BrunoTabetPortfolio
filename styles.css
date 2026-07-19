@@ -371,10 +371,14 @@ em { font-style: italic; color: var(--accent-hi); font-weight: 500; }
 .nj__title { color: #7cc4ff; font-weight: 600; font-size: .92rem; }
 .nj__sub { color: #5f77b0; font-size: .7rem; }
 .nj__stream { flex: 1; min-height: 232px; display: flex; flex-direction: column; gap: 10px; }
-.nj__dots { display: flex; gap: 7px; justify-content: center; margin-top: 10px; }
-.nj__dots i { width: 7px; height: 7px; border-radius: 50%; background: #384c78; transition: .3s; cursor: pointer; }
-.nj__dots i:hover { background: #6cc3ef; }
-.nj__dots i.on { background: #6cc3ef; width: 18px; border-radius: 3px; }
+.nj__dots { display: flex; gap: 2px; justify-content: center; margin-top: 4px; }
+.nj__dots i {
+  box-sizing: content-box; width: 8px; height: 8px; padding: 11px;
+  background-color: #384c78; background-clip: content-box; border-radius: 50%;
+  cursor: pointer; transition: background-color .3s, width .3s;
+}
+.nj__dots i:hover { background-color: #6cc3ef; }
+.nj__dots i.on { background-color: #6cc3ef; width: 20px; border-radius: 8px; }
 .nj .q { align-self: flex-end; max-width: 90%; background: linear-gradient(180deg, #9fdcf6, #6cc3ef); color: #06131f; font-weight: 500; padding: 8px 12px; border-radius: 14px 14px 4px 14px; font-size: .8rem; line-height: 1.4; }
 .nj .q .cursor { display: inline-block; width: 2px; height: 1em; background: #06131f; margin-left: 1px; vertical-align: -2px; animation: nblink 1s steps(1) infinite; }
 @keyframes nblink { 50% { opacity: 0; } }
