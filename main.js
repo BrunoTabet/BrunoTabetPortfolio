@@ -224,6 +224,120 @@
     window.addEventListener("scroll", onScroll, { passive: true });
   }
 
+  /* --- Najma live Nujoom demo (reproduced from the getnajma.com landing) --- */
+  function initNajmaDemo() {
+    var stream = document.getElementById("njStream");
+    var dotsWrap = document.getElementById("njDots");
+    if (!stream) return;
+    var dots = dotsWrap ? Array.prototype.slice.call(dotsWrap.children) : [];
+    var BLUE = "#6cc3ef", ROSE = "#f0a6c0", SOL = "#e9be5c";
+
+    var convos = [
+      {
+        q: "Best day to ask for a raise this month?",
+        a: "Thursday the 24th edges it. The Sun lights up your <b>10th house of career</b>, so visibility and authority run high that day.",
+        head: "✦ Career timing", sub: "this week · higher = stronger",
+        labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+        you: [54, 61, 58, 82, 60, 47, 50], peak: 3
+      },
+      {
+        q: "When should I call my mum this week?",
+        a: "This week is fairly even, so you have room to choose. <b>Thursday lands warmest</b>, with the Moon in your 4th house of home and family.",
+        head: "🏡 Reaching out", sub: "you vs Lea · higher = warmer",
+        labels: ["Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri"],
+        you: [50, 50, 45, 45, 49, 51, 46], lea: [47, 49, 44, 43, 46, 48, 45], peak: 5
+      }
+    ];
+
+    var reduce = window.matchMedia("(prefers-reduced-motion:reduce)").matches;
+    function wait(ms) { return new Promise(function (r) { setTimeout(r, reduce ? Math.min(ms, 100) : ms); }); }
+
+    function chartEl(c) {
+      var arr = c.lea ? c.you.concat(c.lea) : c.you;
+      var max = Math.max.apply(null, arr);
+      var card = document.createElement("div"); card.className = "card2";
+      var legend = c.lea
+        ? '<div class="legend2"><span><i style="background:' + BLUE + '"></i>You</span><span><i style="background:' + ROSE + '"></i>Lea</span></div>'
+        : "";
+      card.innerHTML = '<div class="card2-h">' + c.head + '</div><div class="card2-sub">' + c.sub + "</div>" + legend + '<div class="chart2"></div>';
+      var chart = card.querySelector(".chart2");
+      c.labels.forEach(function (lb, i) {
+        var col = document.createElement("div");
+        col.className = "col2" + (i === c.peak ? " peak" : "");
+        if (c.lea) {
+          col.innerHTML = '<div class="bars2"><span class="bar2 j1" style="--bw:6px;background:' + BLUE + '"></span><span class="bar2 j2" style="--bw:6px;background:' + ROSE + '"></span></div><small>' + lb + "</small>";
+        } else {
+          var color = i === c.peak ? SOL : BLUE;
+          col.innerHTML = '<div class="bars2"><span class="bar2 j1" style="--bw:11px;background:' + color + '"></span></div><small>' + lb + "</small>";
+        }
+        chart.appendChild(col);
+        var j1 = col.querySelector(".j1"), j2 = col.querySelector(".j2");
+        setTimeout(function () {
+          j1.style.height = (c.you[i] / max * 100) + "%";
+          if (j2) j2.style.height = (c.lea[i] / max * 100) + "%";
+        }, 70 * i + 140);
+      });
+      return card;
+    }
+
+    function typeQ(text) {
+      var q = document.createElement("div"); q.className = "q";
+      var span = document.createElement("span");
+      var cur = document.createElement("span"); cur.className = "cursor";
+      q.appendChild(span); q.appendChild(cur); stream.appendChild(q);
+      if (reduce) { span.textContent = text; cur.remove(); return Promise.resolve(); }
+      return new Promise(function (resolve) {
+        var i = 0;
+        (function step() {
+          if (i >= text.length) { setTimeout(function () { cur.remove(); resolve(); }, 260); return; }
+          span.textContent = text.slice(0, ++i);
+          setTimeout(step, 26 + Math.random() * 42);
+        })();
+      });
+    }
+
+    function showTyping() {
+      var t = document.createElement("div"); t.className = "a show";
+      t.innerHTML = '<div class="typing2"><i></i><i></i><i></i></div>';
+      stream.appendChild(t);
+      return wait(reduce ? 100 : 850).then(function () { t.remove(); });
+    }
+
+    function answer(c) {
+      var a = document.createElement("div"); a.className = "a";
+      a.innerHTML = '<div class="a-text">' + c.a + "</div>";
+      a.appendChild(chartEl(c));
+      stream.appendChild(a);
+      requestAnimationFrame(function () { a.classList.add("show"); });
+    }
+
+    var idx = 0, started = false;
+    function run() {
+      stream.style.opacity = 0;
+      wait(reduce ? 60 : 260).then(function () {
+        stream.innerHTML = ""; stream.style.opacity = 1;
+        dots.forEach(function (d, i) { d.classList.toggle("on", i === idx); });
+        var c = convos[idx];
+        return typeQ(c.q).then(showTyping).then(function () { answer(c); });
+      }).then(function () {
+        return wait(reduce ? 2600 : 5600);
+      }).then(function () {
+        idx = (idx + 1) % convos.length;
+        run();
+      });
+    }
+
+    // start only when the card scrolls into view (saves work off-screen)
+    if ("IntersectionObserver" in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting && !started) { started = true; run(); io.disconnect(); }
+        });
+      }, { threshold: 0.25 });
+      io.observe(stream);
+    } else { run(); }
+  }
+
   /* --- case study dialog --- */
   function initCaseStudies() {
     var dialog = document.getElementById("caseDialog");
@@ -272,6 +386,7 @@
     initGlow();
     initReveals();
     initNav();
+    initNajmaDemo();
     initCaseStudies();
     var y = document.getElementById("year");
     if (y) y.textContent = new Date().getFullYear();

@@ -115,22 +115,13 @@
         <article class="card card--feature reveal" id="najma" data-case="najma">
           <div class="card__media card__media--mock" data-motif="najma">
             <div class="card__badge">★ Flagship</div>
-            <div class="mock mock--najma" aria-hidden="true">
-              <div class="mnj__head">
-                <span class="mnj__title">✦ Nujoom</span>
-                <span class="mnj__sub">cosmic decision guide</span>
+            <div class="nj" aria-hidden="true">
+              <div class="nj__head">
+                <span class="nj__title">✦ Nujoom</span>
+                <span class="nj__sub">your cosmic decision guide</span>
               </div>
-              <div class="mnj__chat">
-                <div class="mnj__bubble mnj__bubble--user">Best day to ask for a raise this month?</div>
-                <div class="mnj__bubble mnj__bubble--ai">
-                  Thursday the 24th edges it — the Sun lights up your 10th house of career, so
-                  visibility and authority run high.
-                  <span class="mnj__score"><b>82</b>/100 · career timing</span>
-                  <span class="mnj__bars">
-                    <i style="height:38%"></i><i style="height:54%"></i><i style="height:47%"></i><i style="height:82%" class="is-peak"></i><i style="height:61%"></i><i style="height:44%"></i><i style="height:52%"></i>
-                  </span>
-                </div>
-              </div>
+              <div class="nj__stream" id="njStream"></div>
+              <div class="nj__dots" id="njDots"><i></i><i></i></div>
             </div>
           </div>
           <div class="card__body">
@@ -260,35 +251,54 @@
     <!-- EXPERIENCE -->
     <section class="section experience reveal" id="experience">
       <p class="section__kicker">Experience</p>
+
+      <h3 class="xp__group">Work</h3>
       <ol class="xp">
         <li class="xp__item">
-          <span class="xp__when">Aug 2024 — now</span>
+          <span class="xp__when">Sept 2025 — Present</span>
+          <span class="xp__role">Data Scientist</span>
+          <span class="xp__org">CVS Health · New York</span>
+          <span class="xp__note">A GCP / BigQuery system that cuts prior-authorization handling time — data model, ingestion pipelines, and Python logic matching PA metadata to the right work instructions.</span>
+        </li>
+        <li class="xp__item">
+          <span class="xp__when">Aug 2024 — Sept 2025</span>
           <span class="xp__role">Business Analyst / ML Engineer</span>
           <span class="xp__org">Encore Capital (Midland Credit Management) · San Diego</span>
-          <span class="xp__note">XGBoost forecasting on Azure / PySpark (1–3% MAPE), SQL &amp; risk modeling.</span>
+          <span class="xp__note">XGBoost collections forecasting on Azure / PySpark (&lt;1–3% MAPE); daily SQL for investment risk.</span>
         </li>
         <li class="xp__item">
-          <span class="xp__when">2023 — 2024</span>
-          <span class="xp__role">MEng, Industrial Engineering &amp; Operations Research</span>
-          <span class="xp__org">UC Berkeley · GPA 3.94</span>
-          <span class="xp__note">Machine learning, optimization, and the capstone above.</span>
-        </li>
-        <li class="xp__item">
-          <span class="xp__when">2023</span>
-          <span class="xp__role">Management Consulting Intern</span>
+          <span class="xp__when">Feb 2023 — Jul 2023</span>
+          <span class="xp__role">Management Consultant · Intern</span>
           <span class="xp__org">BearingPoint · Paris</span>
+          <span class="xp__note">Missions for a transit operator and an electric utility's ERP rollout.</span>
         </li>
         <li class="xp__item">
-          <span class="xp__when">2022</span>
-          <span class="xp__role">Data Scientist Intern</span>
+          <span class="xp__when">Jul 2022 — Dec 2022</span>
+          <span class="xp__role">Data Scientist · Intern</span>
           <span class="xp__org">Veolia · Dubai</span>
           <span class="xp__note">Energy-consumption ML — an RNN that cut HVAC use by 35%.</span>
         </li>
+      </ol>
+
+      <h3 class="xp__group">Education</h3>
+      <ol class="xp">
         <li class="xp__item">
-          <span class="xp__when">2020 — 2023</span>
-          <span class="xp__role">MEng Data Science &amp; BEng</span>
-          <span class="xp__org">CentraleSupélec (Paris-Saclay) · GPA 3.98 / 3.93</span>
-          <span class="xp__note">Top-1% entrance rank (132nd, 2020).</span>
+          <span class="xp__when">Aug 2023 — May 2024</span>
+          <span class="xp__role">MEng, Industrial Engineering &amp; Operations Research</span>
+          <span class="xp__org">UC Berkeley · 3.94 GPA</span>
+          <span class="xp__note">Machine learning, deep learning, and optimization — plus the capstone above.</span>
+        </li>
+        <li class="xp__item">
+          <span class="xp__when">Sep 2021 — May 2024</span>
+          <span class="xp__role">MEng, Data Science</span>
+          <span class="xp__org">CentraleSupélec (Paris-Saclay) · 3.98 GPA</span>
+          <span class="xp__note">AI, machine learning, probability &amp; statistics.</span>
+        </li>
+        <li class="xp__item">
+          <span class="xp__when">Sep 2018 — Jul 2021</span>
+          <span class="xp__role">BEng</span>
+          <span class="xp__org">CentraleSupélec &amp; Janson de Sailly · 3.93 GPA</span>
+          <span class="xp__note">Ranked 132nd (top 1% nationwide) at the CentraleSupélec entrance exam, 2020.</span>
         </li>
       </ol>
     </section>
