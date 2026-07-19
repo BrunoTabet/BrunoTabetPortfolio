@@ -338,6 +338,160 @@
     } else { run(); }
   }
 
+  /* --- hiresort live scoring demo --- */
+  function initHiresortDemo() {
+    var list = document.getElementById("hsList");
+    var prog = document.getElementById("hsProg");
+    var badge = document.getElementById("hsBadge");
+    if (!list || !prog) return;
+    var reduce = window.matchMedia("(prefers-reduced-motion:reduce)").matches;
+
+    var cands = [
+      { name: "A. Haddad", note: "PyTorch · MLOps · led 2 launches", score: 92, hi: true },
+      { name: "M. Okafor", note: "Strong DS · gap: production ML", score: 87, hi: true },
+      { name: "J. Rivera", note: "Junior · no MLOps signal", score: 71, hi: false, dim: true }
+    ];
+
+    function wait(ms) { return new Promise(function (r) { setTimeout(r, reduce ? Math.min(ms, 120) : ms); }); }
+
+    function countUp(el, target, ms) {
+      if (reduce) { el.textContent = target; return; }
+      var steps = 22, i = 0;
+      var iv = setInterval(function () {
+        i++;
+        var t = i / steps;
+        el.textContent = Math.round(target * (t * (2 - t))); // easeOut
+        if (i >= steps) { clearInterval(iv); el.textContent = target; }
+      }, ms / steps);
+    }
+
+    function fillProgress(ms) {
+      return new Promise(function (resolve) {
+        prog.style.transition = "none";
+        prog.style.width = "0";
+        // next frame: enable the transition and fill to 100%
+        requestAnimationFrame(function () {
+          prog.style.transition = "width " + (reduce ? 200 : ms) + "ms linear";
+          prog.style.width = "100%";
+        });
+        setTimeout(resolve, reduce ? 200 : ms);
+      });
+    }
+
+    function addRow(c, rank) {
+      var row = document.createElement("div");
+      row.className = "mhs__row" + (c.dim ? " mhs__row--dim" : "");
+      row.innerHTML = '<span class="mhs__rank">' + rank + '</span>' +
+        '<span class="mhs__who"><b>' + c.name + '</b><small>' + c.note + '</small></span>' +
+        '<span class="mhs__score' + (c.hi ? ' mhs__score--hi' : '') + '">0</span>';
+      list.appendChild(row);
+      requestAnimationFrame(function () { row.classList.add("show"); });
+      countUp(row.querySelector(".mhs__score"), c.score, 700);
+    }
+
+    var started = false;
+    function run() {
+      list.innerHTML = "";
+      prog.style.width = "0";
+      if (badge) { badge.textContent = "Scoring…"; badge.classList.add("is-scoring"); }
+      wait(400).then(function () { return fillProgress(reduce ? 200 : 1400); }).then(function () {
+        if (badge) { badge.textContent = "Ranked"; badge.classList.remove("is-scoring"); }
+        var seq = Promise.resolve();
+        cands.forEach(function (c, i) {
+          seq = seq.then(function () { return wait(i === 0 ? 200 : 320); }).then(function () { addRow(c, i + 1); });
+        });
+        return seq;
+      }).then(function () {
+        return wait(reduce ? 2800 : 4200);
+      }).then(run);
+    }
+
+    if ("IntersectionObserver" in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting && !started) { started = true; run(); io.disconnect(); }
+        });
+      }, { threshold: 0.3 });
+      io.observe(list);
+    } else { run(); }
+  }
+
+  /* --- Ahlein live WhatsApp demo (cycles business types) --- */
+  function initAhleinDemo() {
+    var chat = document.getElementById("waChat");
+    var bizEl = document.getElementById("waBiz");
+    if (!chat) return;
+    var reduce = window.matchMedia("(prefers-reduced-motion:reduce)").matches;
+
+    var scenarios = [
+      { biz: "Ana · Hair Salon", msgs: [
+        { t: "in",  x: "marhaba! baddi maw3ad la haircut bukra 🙏" },
+        { t: "out", x: "Ahla! Tomorrow I have <b>3:30</b> or <b>5:00pm</b> with Sami. Which suits you?" },
+        { t: "in",  x: "5 🙌" },
+        { t: "out", x: "Booked ✂️ Tomorrow 5:00pm with Sami. I'll remind you the day before." }
+      ]},
+      { biz: "Dr. Aoun · Clinic", msgs: [
+        { t: "in",  x: "bonjour, je voudrais un rendez-vous cette semaine" },
+        { t: "out", x: "Bien sûr ! J'ai <b>jeudi 11h</b> ou <b>vendredi 15h</b>. Lequel préférez-vous ?" },
+        { t: "in",  x: "vendredi svp" },
+        { t: "out", x: "C'est noté ✅ Vendredi 15h. À très vite !" }
+      ]},
+      { biz: "Olive · Restaurant", msgs: [
+        { t: "in",  x: "table for 4 tonight around 8?" },
+        { t: "out", x: "Got it. <b>8:15pm for 4</b> is open. Want me to hold it?" },
+        { t: "in",  x: "yes please" },
+        { t: "out", x: "Done 🍽️ Table for 4 at 8:15 tonight. See you then!" }
+      ]}
+    ];
+
+    function wait(ms) { return new Promise(function (r) { setTimeout(r, reduce ? Math.min(ms, 120) : ms); }); }
+
+    function addBubble(m) {
+      var b = document.createElement("div");
+      b.className = "mwa__bubble mwa__bubble--" + m.t;
+      b.innerHTML = m.x;
+      chat.appendChild(b);
+      requestAnimationFrame(function () { b.classList.add("show"); });
+    }
+    function typing() {
+      var t = document.createElement("div"); t.className = "mwa__typing";
+      t.innerHTML = "<i></i><i></i><i></i>";
+      chat.appendChild(t);
+      requestAnimationFrame(function () { t.classList.add("show"); });
+      return t;
+    }
+
+    var idx = 0, started = false;
+    function run() {
+      var sc = scenarios[idx];
+      chat.innerHTML = "";
+      if (bizEl) bizEl.textContent = sc.biz;
+      var seq = Promise.resolve();
+      sc.msgs.forEach(function (m, i) {
+        seq = seq.then(function () { return wait(i === 0 ? 500 : 700); }).then(function () {
+          if (m.t === "out") {
+            var t = typing();
+            return wait(reduce ? 120 : 900).then(function () { t.remove(); addBubble(m); });
+          }
+          addBubble(m);
+        });
+      });
+      seq.then(function () { return wait(reduce ? 2600 : 3600); }).then(function () {
+        idx = (idx + 1) % scenarios.length;
+        run();
+      });
+    }
+
+    if ("IntersectionObserver" in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting && !started) { started = true; run(); io.disconnect(); }
+        });
+      }, { threshold: 0.3 });
+      io.observe(chat);
+    } else { run(); }
+  }
+
   /* --- case study dialog --- */
   function initCaseStudies() {
     var dialog = document.getElementById("caseDialog");
@@ -387,6 +541,8 @@
     initReveals();
     initNav();
     initNajmaDemo();
+    initHiresortDemo();
+    initAhleinDemo();
     initCaseStudies();
     var y = document.getElementById("year");
     if (y) y.textContent = new Date().getFullYear();
