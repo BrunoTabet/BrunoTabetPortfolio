@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bruno Tabet — ML engineer who ships full products</title>
+  <meta name="description" content="Bruno Tabet builds products end-to-end — from ML models to shipped apps. Born in Tokyo, Lebanese, raised in Paris, now in New York." />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Bruno Tabet — ML engineer who ships full products" />
+  <meta property="og:description" content="I build products end-to-end — from ML models to shipped apps. A global story from Tokyo to New York." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://brunotabet.com" />
+  <meta name="theme-color" content="#0E0F13" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <a class="skip-link" href="#work">Skip to work</a>
+
+  <!-- NAV -->
+  <header class="nav" id="nav">
+    <a class="nav__mark" href="#top" aria-label="Bruno Tabet — home">
+      <span class="nav__initials">BT</span>
+    </a>
+    <nav class="nav__links" aria-label="Primary">
+      <a href="#work">Work</a>
+      <a href="#story">Story</a>
+      <a href="#beyond">Beyond code</a>
+      <a href="#contact">Contact</a>
+      <a class="nav__cv" href="assets/CV_Bruno_TABET.pdf" download>Résumé</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <!-- HERO -->
+    <section class="hero" id="hero">
+      <div class="hero__map-wrap" aria-hidden="true">
+        <svg class="hero__map" id="worldMap" viewBox="0 0 1000 500" preserveAspectRatio="xMidYMid slice" role="presentation"></svg>
+        <div class="hero__map-fade"></div>
+      </div>
+
+      <div class="hero__content">
+        <p class="hero__eyebrow">
+          <span class="hero__dot"></span> ML engineer &amp; product builder
+        </p>
+        <h1 class="hero__title">
+          I build products <br />end-to-end — from <br /><em>ML models</em> to <em>shipped apps</em>.
+        </h1>
+        <p class="hero__lede">
+          Born in Tokyo, Lebanese, raised in Paris — now building in New York.
+          Serious ML depth <span class="hero__amp">+</span> the range to ship real products
+          all the way to the App Store.
+        </p>
+        <div class="hero__actions">
+          <a class="btn btn--primary" href="#work">See the work</a>
+          <a class="btn btn--ghost" href="#contact">Get in touch</a>
+        </div>
+        <ul class="hero__social" aria-label="Elsewhere">
+          <li><a href="https://github.com/BrunoTabet" target="_blank" rel="noopener">GitHub</a></li>
+          <li><a href="https://www.linkedin.com/in/bruno-tabet/" target="_blank" rel="noopener">LinkedIn</a></li>
+          <li><a href="mailto:tabetbruno@gmail.com">Email</a></li>
+        </ul>
+      </div>
+
+      <!-- Journey legend, revealed with the map -->
+      <ol class="journey" id="journey" aria-label="Cities Bruno has lived in, in order">
+        <li data-city="tokyo"><span class="journey__flag">🇯🇵</span> Tokyo <span class="journey__tag">born</span></li>
+        <li data-city="beirut"><span class="journey__flag">🇱🇧</span> Beirut <span class="journey__tag">roots</span></li>
+        <li data-city="paris"><span class="journey__flag">🇫🇷</span> Paris <span class="journey__tag">raised</span></li>
+        <li data-city="dubai"><span class="journey__flag">🇦🇪</span> Dubai <span class="journey__tag">lived</span></li>
+        <li data-city="berkeley"><span class="journey__flag">🇺🇸</span> Berkeley <span class="journey__tag">studied</span></li>
+        <li data-city="sandiego"><span class="journey__flag">🇺🇸</span> San Diego <span class="journey__tag">worked</span></li>
+        <li data-city="newyork"><span class="journey__flag">🇺🇸</span> New York <span class="journey__tag">now</span></li>
+      </ol>
+    </section>
+
+    <!-- STORY -->
+    <section class="section story reveal" id="story">
+      <p class="section__kicker">The story</p>
+      <div class="story__grid">
+        <h2 class="story__lead">
+          A life mapped across seven cities and three continents —
+          it taught me to <em>build for people who aren't like me</em>.
+        </h2>
+        <div class="story__body">
+          <p>
+            I was born in Tokyo to Lebanese parents, grew up in Paris, and spent years
+            in Dubai before crossing to California and, now, New York. Four cultures, four
+            languages, one throughline: figuring out how things work and making them for
+            other people.
+          </p>
+          <p>
+            That's why I sit at an unusual intersection — the math and the ML on one side,
+            the product, design, and ship-it grit on the other. I like owning a problem from
+            the model all the way to the thing in someone's hands.
+          </p>
+          <p class="story__langs">
+            <span>French</span><span>English</span><span>Arabic</span><span class="is-muted">Spanish (intermediate)</span>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SELECTED WORK -->
+    <section class="section work" id="work">
+      <p class="section__kicker">Selected work</p>
+      <h2 class="section__title">Things I've shipped end-to-end.</h2>
+
+      <div class="cards">
+        <!-- Najma -->
+        <article class="card card--feature reveal" id="najma">
+          <div class="card__media" data-motif="najma">
+            <div class="card__badge">★ Flagship</div>
+          </div>
+          <div class="card__body">
+            <div class="card__head">
+              <h3>Najma <span class="card__sub">(MyHoroscopeAI)</span></h3>
+              <a class="card__link" href="https://getnajma.com" target="_blank" rel="noopener">getnajma.com ↗</a>
+            </div>
+            <p class="card__what">
+              A cross-platform astrology app whose core, <strong>Nujoom</strong>, is an
+              <strong>agentic AI assistant</strong> that answers real-life timing and decision
+              questions — grounded in real chart math, not vibes.
+            </p>
+            <p class="card__detail">
+              Built on <strong>Swiss Ephemeris</strong> chart calculations and a
+              <strong>deterministic scoring engine</strong> the LLM narrates but can never
+              invent. iOS in App Store review; web app live now.
+            </p>
+            <ul class="tags">
+              <li>Solo build</li><li>React Native</li><li>Node.js</li><li>Supabase</li><li>Groq LLMs</li><li>Agent + scoring engine</li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- hiresort — pending copy -->
+        <article class="card reveal" id="hiresort">
+          <div class="card__media" data-motif="hiresort"></div>
+          <div class="card__body">
+            <div class="card__head">
+              <h3>hiresort</h3>
+              <a class="card__link" href="https://hiresort.app" target="_blank" rel="noopener">hiresort.app ↗</a>
+            </div>
+            <p class="card__what" data-placeholder>
+              <em>One-line description coming — Bruno to confirm what it does, his role, and the stack.</em>
+            </p>
+            <ul class="tags"><li>Full-stack</li></ul>
+          </div>
+        </article>
+
+        <!-- WhatsApp bot — pending copy -->
+        <article class="card reveal" id="whatsapp">
+          <div class="card__media" data-motif="whatsapp"></div>
+          <div class="card__body">
+            <div class="card__head">
+              <h3>WhatsApp bot</h3>
+            </div>
+            <p class="card__what" data-placeholder>
+              <em>One-line description coming — Bruno to confirm what it does and whether it's demoable.</em>
+            </p>
+            <ul class="tags"><li>Automation</li></ul>
+          </div>
+        </article>
+
+        <!-- Berkeley capstone -->
+        <article class="card reveal" id="capstone">
+          <div class="card__media" data-motif="capstone"></div>
+          <div class="card__body">
+            <div class="card__head">
+              <h3>Predicting the next impactful scientists</h3>
+              <span class="card__link is-static">Berkeley MEng capstone</span>
+            </div>
+            <p class="card__what">
+              Classification + forecasting models that predict inventor breakthroughs from
+              patents, publications, and citations — the serious-ML side of my work.
+            </p>
+            <ul class="tags"><li>91% accuracy (boosting)</li><li>48-paper MAE</li><li>Python</li><li>ML forecasting</li></ul>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section class="section experience reveal" id="experience">
+      <p class="section__kicker">Experience</p>
+      <ol class="xp">
+        <li class="xp__item">
+          <span class="xp__when">Aug 2024 — now</span>
+          <span class="xp__role">Business Analyst / ML Engineer</span>
+          <span class="xp__org">Encore Capital (Midland Credit Management) · San Diego</span>
+          <span class="xp__note">XGBoost forecasting on Azure / PySpark (1–3% MAPE), SQL &amp; risk modeling.</span>
+        </li>
+        <li class="xp__item">
+          <span class="xp__when">2023 — 2024</span>
+          <span class="xp__role">MEng, Industrial Engineering &amp; Operations Research</span>
+          <span class="xp__org">UC Berkeley · GPA 3.94</span>
+          <span class="xp__note">Machine learning, optimization, and the capstone above.</span>
+        </li>
+        <li class="xp__item">
+          <span class="xp__when">2023</span>
+          <span class="xp__role">Management Consulting Intern</span>
+          <span class="xp__org">BearingPoint · Paris</span>
+        </li>
+        <li class="xp__item">
+          <span class="xp__when">2022</span>
+          <span class="xp__role">Data Scientist Intern</span>
+          <span class="xp__org">Veolia · Dubai</span>
+          <span class="xp__note">Energy-consumption ML — an RNN that cut HVAC use by 35%.</span>
+        </li>
+        <li class="xp__item">
+          <span class="xp__when">2020 — 2023</span>
+          <span class="xp__role">MEng Data Science &amp; BEng</span>
+          <span class="xp__org">CentraleSupélec (Paris-Saclay) · GPA 3.98 / 3.93</span>
+          <span class="xp__note">Top-1% entrance rank (132nd, 2020).</span>
+        </li>
+      </ol>
+    </section>
+
+    <!-- BEYOND CODE -->
+    <section class="section beyond reveal" id="beyond">
+      <p class="section__kicker">Beyond code</p>
+      <div class="beyond__grid">
+        <div class="beyond__item"><h3>Piano</h3><p>Debussy Conservatory trained, still playing since 2007.</p></div>
+        <div class="beyond__item"><h3>Football captain</h3><p>On the pitch and leading the team.</p></div>
+        <div class="beyond__item"><h3>OffreJoie</h3><p>Rebuilding homes with the volunteer movement in Lebanon.</p></div>
+        <div class="beyond__item"><h3>TEDx</h3><p>Organizer at TEDx CentraleSupélec.</p></div>
+        <div class="beyond__item"><h3>Languages</h3><p>French, English, Arabic — and intermediate Spanish.</p></div>
+        <div class="beyond__item"><h3>Tutoring</h3><p>Teaching math &amp; CS to students who need a hand.</p></div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="section contact reveal" id="contact">
+      <p class="section__kicker">Contact</p>
+      <h2 class="contact__title">Let's build something, or just say hello.</h2>
+      <div class="contact__actions">
+        <a class="btn btn--primary btn--lg" href="mailto:tabetbruno@gmail.com">tabetbruno@gmail.com</a>
+        <a class="btn btn--ghost btn--lg" href="assets/CV_Bruno_TABET.pdf" download>Download résumé</a>
+      </div>
+      <ul class="contact__links">
+        <li><a href="https://github.com/BrunoTabet" target="_blank" rel="noopener">GitHub</a></li>
+        <li><a href="https://www.linkedin.com/in/bruno-tabet/" target="_blank" rel="noopener">LinkedIn</a></li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span>© <span id="year"></span> Bruno Tabet</span>
+    <span class="footer__note">Tokyo → Beirut → Paris → Dubai → Berkeley → San Diego → New York</span>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
