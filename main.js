@@ -34,9 +34,17 @@
 
   var cityNodes = {}; // key -> { dot, ring, label, base }
 
+  // On phones a "meet" world map shrinks to a faint band, so cover the hero instead.
+  function setMapAspect() {
+    var svg = document.getElementById("worldMap");
+    if (!svg) return;
+    svg.setAttribute("preserveAspectRatio", window.innerWidth <= 620 ? "xMidYMid slice" : "xMidYMid meet");
+  }
+
   function buildMap() {
     var svg = document.getElementById("worldMap");
     if (!svg) return;
+    setMapAspect();
     var pts = CITIES.map(function (c) { return project(c.lat, c.lon); });
 
     // --- real continents ---
@@ -227,6 +235,14 @@
     var onScroll = function () { nav.classList.toggle("is-scrolled", window.scrollY > 24); };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
+  }
+
+  function initResize() {
+    var t;
+    window.addEventListener("resize", function () {
+      clearTimeout(t);
+      t = setTimeout(setMapAspect, 200);
+    }, { passive: true });
   }
 
   /* --- Najma live Nujoom demo (reproduced from the getnajma.com landing) --- */
@@ -598,6 +614,7 @@
     initGlow();
     initReveals();
     initNav();
+    initResize();
     initNajmaDemo();
     initHiresortDemo();
     initAhleinDemo();

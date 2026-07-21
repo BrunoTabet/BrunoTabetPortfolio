@@ -228,23 +228,35 @@ em { font-style: italic; color: var(--accent-hi); font-weight: 500; }
   transition: border-color .4s var(--ease), transform .4s var(--ease), box-shadow .4s var(--ease);
 }
 .card:hover { border-color: color-mix(in srgb, var(--accent) 40%, var(--line)); transform: translateY(-4px); box-shadow: 0 24px 60px -30px rgba(0,0,0,.8); }
-.card--feature { flex-direction: row; }
-/* alternate the media side for rhythm */
-.card--feature:nth-of-type(even) { flex-direction: row-reverse; }
-.card--feature:nth-of-type(even) .card__media { border-right: none; border-left: 1px solid var(--line-soft); }
-.card__media {
-  position: relative; min-height: 200px;
-  background: radial-gradient(120% 120% at 70% 20%, color-mix(in srgb, var(--accent) 16%, transparent), transparent 60%), var(--bg);
-  border-bottom: 1px solid var(--line-soft);
+/* desktop: media spans full height on one side; title + body stack on the other */
+.card--feature {
+  display: grid;
+  grid-template-columns: 42% 1fr;
+  grid-template-rows: auto 1fr;
+  grid-template-areas: "media head" "media body";
 }
-.card--feature .card__media { flex: 0 0 42%; border-bottom: none; border-right: 1px solid var(--line-soft); min-height: 340px; }
+/* alternate the media side for rhythm */
+.card--feature:nth-of-type(even) {
+  grid-template-columns: 1fr 42%;
+  grid-template-areas: "head media" "body media";
+}
+.card__media {
+  grid-area: media; position: relative; min-height: 340px;
+  background: radial-gradient(120% 120% at 70% 20%, color-mix(in srgb, var(--accent) 16%, transparent), transparent 60%), var(--bg);
+  border-right: 1px solid var(--line-soft);
+}
+.card--feature:nth-of-type(even) .card__media { border-right: none; border-left: 1px solid var(--line-soft); }
 .card__badge {
   position: absolute; top: 1rem; left: 1rem; z-index: 2;
   font-size: .72rem; letter-spacing: .08em; text-transform: uppercase;
   background: var(--accent); color: #1a1204; padding: .3rem .7rem; border-radius: 999px; font-weight: 600;
 }
-.card__body { padding: clamp(1.4rem, 3vw, 2.2rem); display: flex; flex-direction: column; gap: .9rem; flex: 1; }
-.card__head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: .5rem; }
+.card__head {
+  grid-area: head; display: flex; flex-wrap: wrap; align-items: baseline;
+  justify-content: space-between; gap: .5rem;
+  padding: clamp(1.4rem, 3vw, 2.2rem) clamp(1.4rem, 3vw, 2.2rem) 0;
+}
+.card__body { grid-area: body; padding: .9rem clamp(1.4rem, 3vw, 2.2rem) clamp(1.4rem, 3vw, 2.2rem); display: flex; flex-direction: column; gap: .9rem; }
 .card__head h3 { font-size: clamp(1.3rem, 2.6vw, 1.8rem); }
 .card__sub { color: var(--muted-2); font-size: .7em; font-family: var(--sans); font-weight: 400; }
 .card__link { font-size: .85rem; color: var(--accent); white-space: nowrap; transition: color .25s; }
@@ -256,12 +268,19 @@ em { font-style: italic; color: var(--accent-hi); font-weight: 500; }
 .tags { list-style: none; display: flex; flex-wrap: wrap; gap: .45rem; padding: 0; margin: .3rem 0 0; }
 .tags li { font-size: .74rem; color: var(--muted); border: 1px solid var(--line); border-radius: 999px; padding: .28rem .7rem; }
 @media (max-width: 760px) {
-  .card--feature, .card--feature:nth-of-type(even) { flex-direction: column; }
+  /* phones: title first, then the live demo, then the details */
+  .card--feature, .card--feature:nth-of-type(even) {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+    grid-template-areas: "head" "media" "body";
+  }
   .card--feature .card__media,
   .card--feature:nth-of-type(even) .card__media {
-    flex-basis: auto; border-right: none; border-left: none;
-    border-bottom: 1px solid var(--line-soft); min-height: 260px;
+    border-right: none; border-left: none;
+    border-top: 1px solid var(--line-soft); border-bottom: 1px solid var(--line-soft);
+    min-height: 260px;
   }
+  .card__head { padding: clamp(1.4rem, 5vw, 2.2rem) clamp(1.4rem, 5vw, 2.2rem) 1.1rem; }
 }
 
 /* Najma logo mark (recolored via CSS mask) */
