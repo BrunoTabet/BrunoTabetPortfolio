@@ -224,7 +224,7 @@
       entries.forEach(function (e) {
         if (e.isIntersecting) { e.target.classList.add("is-in"); io.unobserve(e.target); }
       });
-    }, { threshold: 0.15, rootMargin: "0px 0px -8% 0px" });
+    }, { threshold: 0, rootMargin: "0px 0px -70px 0px" });
     items.forEach(function (n) { io.observe(n); });
   }
 
@@ -529,9 +529,9 @@
     var chart = document.getElementById("capChart");
     if (!chart) return;
     var reduce = window.matchMedia("(prefers-reduced-motion:reduce)").matches;
-    var data = [14, 22, 30, 46, 58, 74, 96, 128, 150];
+    var data = [14, 22, 32, 44, 56, 70, 88, 128, 152];
     var labels = ["’17", "’18", "’19", "’20", "’21", "’22", "’23", "’24", "’25"];
-    var foreFrom = 7, max = 165;
+    var foreFrom = 7, max = 175;
     var started = false;
 
     function build() {

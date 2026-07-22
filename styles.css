@@ -112,7 +112,7 @@ em { font-style: italic; color: var(--accent-hi); font-weight: 500; }
   overflow: hidden;
 }
 .hero__map-wrap { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
-.hero__map { width: 100%; height: 100%; opacity: .9; }
+.hero__map { width: 100%; height: 100%; opacity: 1; }
 .hero__map-fade {
   position: absolute; inset: 0;
   background:
@@ -166,7 +166,7 @@ em { font-style: italic; color: var(--accent-hi); font-weight: 500; }
 @keyframes journeyIn { to { opacity: 1; transform: none; } }
 
 /* SVG map elements (injected by main.js) */
-.map-land { fill: #171922; stroke: #2C303C; stroke-width: .4; opacity: .92; }
+.map-land { fill: #1c1f2b; stroke: #3a3f4f; stroke-width: .5; opacity: .95; }
 .map-grid line { stroke: var(--line-soft); stroke-width: .5; opacity: .55; }
 .map-arc {
   fill: none; stroke: var(--accent); stroke-width: 1.3;
@@ -200,8 +200,8 @@ em { font-style: italic; color: var(--accent-hi); font-weight: 500; }
 }
 .section__title { font-size: clamp(1.8rem, 4.2vw, 2.9rem); line-height: 1.1; margin-bottom: 3rem; max-width: 20ch; }
 
-/* reveal on scroll */
-.reveal { opacity: 0; transform: translateY(26px); transition: opacity .8s var(--ease), transform .8s var(--ease); }
+/* reveal on scroll — gentle, refined ease-in */
+.reveal { opacity: 0; transform: translateY(30px); transition: opacity 1.1s cubic-bezier(.16,1,.3,1), transform 1.1s cubic-bezier(.16,1,.3,1); will-change: opacity, transform; }
 .reveal.is-in { opacity: 1; transform: none; }
 @media (prefers-reduced-motion: reduce) {
   .reveal { opacity: 1; transform: none; transition: none; }
@@ -478,7 +478,7 @@ em { font-style: italic; color: var(--accent-hi); font-weight: 500; }
 .mcap__sub { color: var(--muted-2); font-size: .7rem; }
 .mcap__chart {
   flex: 1; min-height: 150px; display: flex; align-items: flex-end; gap: 5px;
-  position: relative; padding: 22px 0 4px; margin-top: 6px;
+  position: relative; margin-top: 10px;
 }
 .mcap__col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 6px; justify-content: flex-end; height: 100%; }
 .mcap__bar { width: 66%; max-width: 16px; border-radius: 3px 3px 0 0; height: 0; transition: height .7s cubic-bezier(.2,.7,.2,1); background: #3a3d47; }
