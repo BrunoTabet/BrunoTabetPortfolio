@@ -58,18 +58,18 @@
    Ahlein · WhatsApp chat  →  owner's calendar app
    ------------------------------------------------------------ */
 .ah {
-  width: 100%; flex: 1; display: flex; flex-direction: column;
+  width: 100%; flex: 1; display: flex; flex-direction: column; justify-content: center;
   background: radial-gradient(120% 90% at 80% 0%, #123a3a 0%, #0b1416 60%);
   padding: 14px 12px 40px; gap: 8px;
   font-size: clamp(8.5px, 2.35cqi, 11px);
 }
 .ah__labels { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; text-align: center; }
 .ah__labels span { font-size: .92em; letter-spacing: .08em; text-transform: uppercase; color: #7fb9b4; }
-.ah__phones { flex: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; min-height: 0; position: relative; }
+.ah__phones { flex: 0 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-items: start; position: relative; }
 .ah__phone {
   position: relative; border-radius: 20px; overflow: hidden; display: flex; flex-direction: column;
   border: 3px solid #1d2426; box-shadow: 0 18px 40px -18px rgba(0,0,0,.8), 0 0 0 1px rgba(255,255,255,.06);
-  min-height: 0;
+  aspect-ratio: 9 / 17.5; min-height: 0;
 }
 .ah__notch { height: 13px; flex: 0 0 auto; display: grid; place-items: center; }
 .ah__notch::after { content: ""; width: 34%; height: 6px; border-radius: 6px; background: #000; }
@@ -140,7 +140,8 @@
 }
 .ah__appt--new.show { opacity: 1; transform: none; box-shadow: 0 0 0 4px rgba(4,200,192,.25), 0 6px 16px -6px rgba(4,130,124,.55); }
 .ah__appt--new.settle { box-shadow: 0 0 0 0 rgba(4,200,192,0); }
-.ah__appt--new small { color: var(--t-signal-ink); font-weight: 600; }
+.ah__appt--new b { color: var(--t-signal-ink); }
+.ah__appt--new small { display: none; }
 .ah__now { position: absolute; left: 2.4em; right: 0; height: 2px; background: var(--t-signal); pointer-events: none; }
 .ah__now::before { content: ""; position: absolute; left: -3px; top: -2px; width: 6px; height: 6px; border-radius: 50%; background: var(--t-signal); }
 .ah__toast {

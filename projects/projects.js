@@ -87,7 +87,7 @@
     appt(1, T(10, 15), T(10, 45), "Beard trim", "Elie · 10:15");
     appt(1, T(11, 0), T(12, 0), "Colour", "Maya · 11:00");
     appt(1, T(12, 30), T(13, 0), "Haircut", "Nabil · 12:30");
-    var fresh = appt(0, T(11, 0), T(11, 30), "Haircut", "Rami · 11:00", "ah__appt--new");
+    var fresh = appt(0, T(11, 0), T(11, 30), "Haircut", "", "ah__appt--new");
 
     var bars = [3, 6, 9, 5, 10, 7, 4, 8, 11, 6, 3, 7, 9, 5, 8, 4, 6, 3];
     var wave = bars.map(function (b) { return '<i style="height:' + (b * 9) + '%"></i>'; }).join("");
@@ -120,7 +120,7 @@
         return typing(step, 1300);
       }).then(function () {
         ask = bubble("in",
-          "Hi Rami! Saturday at <b>11:00</b> is free with <b>Sami</b>. Haircut, 30 min, $15. Shall I book it?" +
+          "Hi Rami! <b>11:00</b> Saturday is free with <b>Sami</b>. Haircut, 30 min, $15. Book it?" +
           '<span class="ah__btns"><span>Book it</span><span>Another time</span></span>');
         return step(1700);
       }).then(function () {
